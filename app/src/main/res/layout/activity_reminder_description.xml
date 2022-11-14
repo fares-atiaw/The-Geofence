@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <!--Data item that holds the reminder details-->
+        <variable
+            name="reminderDataItem"
+            type="com.udacity.project4.locationreminders.reminderslist.ReminderDataItem" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".locationreminders.ReminderDescriptionActivity">
+        <!--TODO Done: add the design of the reminder details-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="top"
+            android:text="Reminder Details"
+            android:textSize="@dimen/text_size_large"
+            android:textColor="@color/black"
+            android:textStyle="bold|italic"
+            android:padding="@dimen/margin_normal"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="top"
+            android:text="@={reminderDataItem.location}"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold|italic"
+            android:layout_margin="@dimen/margin_normal"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="top"
+            android:text="@={reminderDataItem.title}"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold|italic"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="top"
+            android:text="@={reminderDataItem.description}"
+            android:textSize="@dimen/text_size_large"
+            android:textStyle="bold|italic"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginStart="@dimen/margin_normal"
+            android:layout_marginEnd="@dimen/margin_normal"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/margin_normal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Latitude @ "
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="italic"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@={reminderDataItem.latitude+``}"
+                android:textSize="@dimen/text_size_large"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Longitude @ "
+                android:textSize="@dimen/text_size_large"
+                android:textStyle="italic"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@={reminderDataItem.longitude+``}"
+                android:textSize="@dimen/text_size_large"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginEnd="@dimen/margin_normal"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>
