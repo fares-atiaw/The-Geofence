@@ -181,43 +181,6 @@ class SaveReminderFragment : BaseFragment() {   /**Using the view-model variable
         return true
     }
 
-    // Determines whether the app has the appropriate permissions across Android 10+ and all other Android versions.
-/** Check & ask for the 3 permissions **/
-/*    private fun foregroundLocationPermissionApproved(): Boolean {
-        return(PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                && PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION))
-    }
-    private fun foregroundAndBackgroundLocationPermissionApproved(): Boolean {
-        val backgroundPermissionApproved =
-            if (runningQOrLater)
-                PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                )
-            else
-                true
-
-        return foregroundLocationPermissionApproved() && backgroundPermissionApproved
-    }
-    // Requests ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION and ACCESS_BACKGROUND_LOCATION(on Android 10+ (Q)).
-    private fun requestForegroundAndBackgroundLocationPermissions() {
-        if (foregroundAndBackgroundLocationPermissionApproved())
-            return
-
-        firstRequest = true
-
-        val resultCode = when {
-            runningQOrLater -> {
-                // this provides the result[BACKGROUND_LOCATION_PERMISSION_INDEX]
-                PERMISSIONS += Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                REQUEST_FOREGROUND_AND_BACKGROUND_PERMISSION_RESULT_CODE
-            }
-            else -> REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE
-        }
-
-        // You got the list of permissions and their request code. Now, show the request to the user!
-        ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, resultCode)
-    }*/
 
 /**Starts the permission check**/
     private fun checkPermissionsThenStartGeofence() {
@@ -233,7 +196,7 @@ class SaveReminderFragment : BaseFragment() {   /**Using the view-model variable
     private val resolutionForResult = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
-        // After the user's choice from the Permission-Dialog
+        // After the user choose from the Permission-Dialog ↴
             if (permissions.values.all { it }) {
                 // Now all the 3 permissions are granted
                 checkDeviceLocationSettingsThenStartGeofence()
@@ -281,38 +244,10 @@ class SaveReminderFragment : BaseFragment() {   /**Using the view-model variable
         }
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
         //make sure to clear the view model after destroy, as it's a single view model.
         _viewModel.onClear()
-    }
-
-    // This function is being called after each fragment dialog of a permission finished.
-    @Deprecated("Deprecated in Java")
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        Log.d(TAG, "onRequestPermissionResult")
-        if (grantResults[BACKGROUND_LOCATION_PERMISSION_INDEX] == PackageManager.PERMISSION_DENIED ||
-            (requestCode == REQUEST_FOREGROUND_AND_BACKGROUND_PERMISSION_RESULT_CODE &&
-                    grantResults[BACKGROUND_LOCATION_PERMISSION_INDEX] ==
-                    PackageManager.PERMISSION_DENIED)
-        ) {
-            Snackbar.make(
-                binding.root,
-                R.string.permission_denied_explanation,
-                Snackbar.LENGTH_INDEFINITE
-            )
-                .setAction(R.string.settings) {
-                    startActivityForResult(Intent().apply {
-                        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                        data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
-                        addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
-                    }, REQUEST_TURN_DEVICE_LOCATION_ON)
-                }.show()
-        } else {
-            checkDeviceLocationSettingsThenStartGeofence()
-        }
     }
 
     // When we get the result from asking the user to turn on device location,
@@ -329,3 +264,71 @@ class SaveReminderFragment : BaseFragment() {   /**Using the view-model variable
         internal const val ACTION_GEOFENCE_EVENT = "ACTION_GEOFENCE_EVENT"     // manual action filter
     }
 }
+
+
+// Determines whether the app has the appropriate permissions across Android 10+ and all other Android versions.
+/** Check & ask for the 3 permissions **/
+/*    private fun foregroundLocationPermissionApproved(): Boolean {
+        return(PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                && PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION))
+    }
+    private fun foregroundAndBackgroundLocationPermissionApproved(): Boolean {
+        val backgroundPermissionApproved =
+            if (runningQOrLater)
+                PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                )
+            else
+                true
+
+        return foregroundLocationPermissionApproved() && backgroundPermissionApproved
+    }
+    // Requests ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION and ACCESS_BACKGROUND_LOCATION(on Android 10+ (Q)).
+    private fun requestForegroundAndBackgroundLocationPermissions() {
+        if (foregroundAndBackgroundLocationPermissionApproved())
+            return
+
+        firstRequest = true
+
+        val resultCode = when {
+            runningQOrLater -> {
+                // this provides the result[BACKGROUND_LOCATION_PERMISSION_INDEX]
+                PERMISSIONS += Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                REQUEST_FOREGROUND_AND_BACKGROUND_PERMISSION_RESULT_CODE
+            }
+            else -> REQUEST_FOREGROUND_ONLY_PERMISSIONS_REQUEST_CODE
+        }
+
+        // You got the list of permissions and their request code. Now, show the request to the user!
+        ActivityCompat.requestPermissions(requireActivity(), PERMISSIONS, resultCode)
+    }*/
+
+/*
+// This function is being called after each fragment dialog of a permission finished.
+@Deprecated("Deprecated in Java")
+override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    Log.d(TAG, "onRequestPermissionResult")
+    if (grantResults[BACKGROUND_LOCATION_PERMISSION_INDEX] == PackageManager.PERMISSION_DENIED ||
+        (requestCode == REQUEST_FOREGROUND_AND_BACKGROUND_PERMISSION_RESULT_CODE &&
+                grantResults[BACKGROUND_LOCATION_PERMISSION_INDEX] ==
+                PackageManager.PERMISSION_DENIED)
+    ) {
+        Snackbar.make(
+            binding.root,
+            R.string.permission_denied_explanation,
+            Snackbar.LENGTH_INDEFINITE
+        )
+            .setAction(R.string.settings) {
+                startActivityForResult(Intent().apply {
+                    action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    data = Uri.fromParts("package", BuildConfig.APPLICATION_ID, null)
+                    addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP or Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+                }, REQUEST_TURN_DEVICE_LOCATION_ON)
+            }.show()
+    } else {
+        checkDeviceLocationSettingsThenStartGeofence()
+    }
+}
+*/

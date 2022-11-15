@@ -2,11 +2,14 @@ package com.udacity.project4.utils
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.NotificationManager
 import android.content.Context
 import android.net.ConnectivityManager
+import android.os.Build
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +22,14 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 
+val Context.notificationManager: NotificationManager?
+    get() = getSystemService()
+
+fun ifSupportsOreo(f: () -> Unit) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        f()
+    }
+}
 
 /**
  * Extension function to setup the RecyclerView
